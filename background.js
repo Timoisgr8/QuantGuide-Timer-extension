@@ -1,5 +1,11 @@
 let isEnabled = false; // Toggle state, default to false
 
+// Load toggle state from local storage when the extension is loaded
+chrome.storage.local.get("isEnabled", (data) => {
+    isEnabled = data.isEnabled || false;
+    console.log("Extension initial state: ", isEnabled);
+});
+
 // Listen for updates to the URL
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (changeInfo.url) {
@@ -34,21 +40,16 @@ chrome.tabs.onActivated.addListener(activeInfo => {
     });
 });
 
-// Load toggle state
-chrome.storage.sync.get("isEnabled", (data) => {
-    isEnabled = data.isEnabled || false;
-});
-
 // Main function to check the URL and inject the timer if needed
 function checkQuantGuideQuestion(tab, tabId) {
     if (isEnabled && tab.url.startsWith("https://www.quantguide.io/questions/")) {
         console.log("SERVING TIMER");
-        
+
         // Send message to content.js to create the timer
         chrome.tabs.sendMessage(tabId, { action: 'showTimer', tabId: tabId });
     } else {
         console.log("REMOVING TIMER");
-        
+
         // Send message to content.js to remove the timer
         chrome.tabs.sendMessage(tabId, { action: 'hideTimer', tabId: tabId });
     }
