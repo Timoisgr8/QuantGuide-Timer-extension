@@ -1,17 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "Post Detector",
+  "name": "URL Monitor",
   "version": "1.0",
-  "description": "Logs 'Hello' on page load and detects POST requests",
-  "permissions": ["webRequest", "webRequestBlocking", "tabs"],
-  "host_permissions": ["<all_urls>"],
   "background": {
-    "service_worker": "service_worker.js"
+      "service_worker": "background.js"
   },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"]
-    }
+  "permissions": [
+      "tabs"
   ]
 }
