@@ -1,0 +1,37 @@
+{
+  "name": "QuantGuide Timer",
+  "description": "Starts a 1:30 timer when visiting quantguide.io/questions/",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": [
+    "tabs",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://www.quantguide.io/questions/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/extension_icon16.png",
+    "32": "icons/extension_icon32.png",
+    "48": "icons/extension_icon48.png",
+    "128": "icons/extension_icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icons/extension_icon16.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.quantguide.io/*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ]
+}
